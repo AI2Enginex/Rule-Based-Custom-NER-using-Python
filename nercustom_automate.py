@@ -29,7 +29,7 @@ class AutoCreatearr:
     def get_files(self,dir):
 
         try:
-            return sorted([files for files in os.listdir(dir)])
+            return sorted([dir+'/'+files for files in os.listdir(dir)])
         except Exception as e:
             return e
     
@@ -256,7 +256,7 @@ class GeneratePatterns:
         
         try:
             for data in pair:      # list of files
-                self.gd = GenerateData(data[0])  # fetching nfile name
+                self.gd = GenerateData(data[0])  # fetching file name
                 self.final_list = sorted(self.gd.finalgenerateddata(add_prefix,split_str))
                 for item in self.final_list:
                     pattern = {"label": data[1], "pattern": item}  # fetching entity name
@@ -398,7 +398,6 @@ class ModelTraining:
     def trainmodel(self,data,iterations):
 
         try:
-
             other_pipes = [pipe for pipe in self.nlp.pipe_names if pipe != 'ner']
             with self.nlp.disable_pipes(*other_pipes): 
                 optimizer = self.nlp.begin_training()
